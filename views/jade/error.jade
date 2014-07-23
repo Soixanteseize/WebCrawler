@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    .container
+        .page-header
+            h1 Error #{error.status}
+        .panel.panel-danger
+            .panel-heading
+                h2.panel-title #{message} 
+            if error.message
+                .panel-body
+                    pre #{error.stack}
