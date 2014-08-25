@@ -18,14 +18,15 @@ crawlerFactory.on('error', function(data) {
 
 crawlerFactory.on('create', function(data) {
     var crawler = data.crawler;
-    app.io.emit('startCrawler', {percent: data.percent});
+    var startTime = data.startTime;
+    app.io.emit('startCrawler', {startTime: startTime, percent: data.percent});
     crawler.fetch();
     crawler.on('success', function(data) {
-        console.log(data.url);
+        data.startTime = startTime;
         app.io.emit('successFileCrawler', data);
     });
     crawler.on('error', function(data) {
-        console.log(data);
+        data.startTime = startTime;
         app.io.emit('errorFileCrawler', data);
     });
     crawler.on('end', function(data) {
@@ -34,7 +35,7 @@ crawlerFactory.on('create', function(data) {
         crawler.errorCount = 0;
         crawler.remainingCount = 0;
         crawler.fetch();
-        app.io.emit('startCrawler', {percent: 0});
+        app.io.emit('startCrawler', {percent: 0, startTime: startTime});
     });
 });
 

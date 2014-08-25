@@ -34,30 +34,50 @@ appControllers.controller('appCtrl', [
         $scope.executedCount = 0;
         $scope.remainingCount = 0;
         $scope.errorCount = 0;
+        $scope.currentRunningSeconds = 0;
+        var timer = null;
+        var startTimer = function(startDate) {
+            timer = setInterval(function() {
+                var time = (new Date() - new Date(startDate));
+                $scope.currentRunningSeconds = (time / 1000).toFixed(0);
+                $scope.$apply();
+            }, 1000);
+        };
+        var stopTimer = function() {
+            clearInterval(timer);
+        };
         app.socket.on('errorCrawler', function(data) {
             $scope.errors.push(data.error.toString());
         });
         app.socket.on('startCrawler', function(data) {
+            stopTimer();
+            startTimer(data.startTime);
             $scope.percent = data.percent;
             $scope.$apply();
         });
         app.socket.on('errorFileCrawler', function(data) {
+            if (!timer) {
+                startTimer(new Date(data.startTime));
+            }
             $scope.logs.push({
                 type: 'error',
                 message: data.error
             });
             $scope.percent = data.percent;
-            $scope.errorCount =  data.errorCount;
+            $scope.errorCount = data.errorCount;
             $scope.executedCount = data.executedCount;
             $scope.remainingCount = data.remainingCount;
             $scope.$apply();
         });
         app.socket.on('successFileCrawler', function(data) {
+            if (!timer) {
+                startTimer(new Date(data.startTime));
+            }
             $scope.logs.push({
                 type: 'success',
                 message: data.url
             });
-            $scope.errorCount =  data.errorCount;
+            $scope.errorCount = data.errorCount;
             $scope.executedCount = data.executedCount;
             $scope.remainingCount = data.remainingCount;
             $scope.percent = data.percent;

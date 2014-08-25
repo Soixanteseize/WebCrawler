@@ -18,7 +18,8 @@ block content
             span.label.label-info.ng-hide(ng-show="percent > 0") {{ percent }}%
             span.label.label-success.ng-hide(ng-show="percent > 0") executed: {{ executedCount }} 
             span.label.label-danger.ng-hide(ng-show="percent > 0") errored: {{ errorCount }} 
-            span.label.label-default.ng-hide(ng-show="percent > 0") remaining: {{ remainingCount }} 
+            span.label.label-warning.ng-hide(ng-show="percent > 0") remaining: {{ remainingCount }} 
+            span.label.label-default.ng-hide(ng-show="percent > 0") running since: {{ currentRunningSeconds }}s
         
         div.progress.ng-hide(ng-show="percent > 0")
             div.progress-bar.progress-bar-striped.progress-bar-success.active(role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%")
