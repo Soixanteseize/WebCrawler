@@ -1,7 +1,8 @@
 'use strict';
 
 var Socket = function() {
-    this.socket = io('http://kookai-pprod.soixanteseize-lab.com:3001');
+    //this.socket = io('http://kookai-pprod.soixanteseize-lab.com:3001');
+    this.socket = io();
     return this.socket;
 };
 var socket = new Socket();
