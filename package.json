@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./app.js",
-    "startProd": "forever start ./app.js"
+    "startProd": "forever start ./app.js",
+    "startCli": "node ./app.js fromCli"
   },
   "config": {
     "host": "http://localhost",

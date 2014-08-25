@@ -29,37 +29,37 @@ appControllers.controller('appCtrl', [
     function($scope, $http) {
         $scope.errors = [];
         $scope.logs = [];
-        $scope.count = 0;
         $scope.percent = 0;
-        var totalCount = 0;
-        function calculPercent(count) {
-            var percent = parseFloat(count * 100 / totalCount);
-            return percent.toFixed(2);
-        }
+        $scope.executedCount = 0;
+        $scope.remainingCount = 0;
+        $scope.errorCount = 0;
         app.socket.on('errorCrawler', function(data) {
             $scope.errors.push(data.error.toString());
         });
         app.socket.on('startCrawler', function(data) {
-            totalCount = data.count;
-            $scope.percent = calculPercent($scope.count);
+            $scope.percent = data.percent;
             $scope.$apply();
         });
         app.socket.on('errorFileCrawler', function(data) {
-            $scope.count++;
             $scope.logs.push({
                 type: 'error',
                 message: data.error
             });
-            $scope.percent = calculPercent($scope.count);
+            $scope.percent = data.percent;
+            $scope.errorCount =  data.errorCount;
+            $scope.executedCount = data.executedCount;
+            $scope.remainingCount = data.remainingCount;
             $scope.$apply();
         });
         app.socket.on('successFileCrawler', function(data) {
-            $scope.count++;
             $scope.logs.push({
                 type: 'success',
                 message: data.url
             });
-            $scope.percent = calculPercent($scope.count);
+            $scope.errorCount =  data.errorCount;
+            $scope.executedCount = data.executedCount;
+            $scope.remainingCount = data.remainingCount;
+            $scope.percent = data.percent;
             $scope.$apply();
         });
     }
@@ -76,6 +76,7 @@ appDirectives.directive('startCrawler', [
                 if (offset === '') {
                     offset = 0;
                 }
+                offset = parseInt(offset);
                 if (sitemapUrl === '') {
                     var error = new Error('The sitemap url is empty');
                     $scope.errors = [];

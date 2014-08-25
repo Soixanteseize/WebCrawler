@@ -5,7 +5,7 @@ block content
         div.page-header
             h1 #{title}
         p.alert.alert-danger.ng-hide(ng-show="errors.length > 0" ng-repeat="error in errors  track by $index") {{error}}
-        div.panel.panel-default
+        div.panel.panel-default(ng-hide="percent > 0")
             div.panel-heading
                 h2.panel-title Crawler
             div.panel-body
@@ -14,7 +14,12 @@ block content
                         input.form-control.sitemapUrl(type="text", placeholder="Website sitemap url", value="http://kookai-pprod.soixanteseize-lab.com/sitemap.xml")
                         input.form-control.offset(type="text", placeholder="Offset")
                     button.btn.btn-primary.btn-block(href="#", ng-hide="hideStart == 1", ng-click="hideStart=1") Start
-        p.text-center.ng-hide(ng-show="percent > 0") {{ percent }}%
+        p.text-center
+            span.label.label-info.ng-hide(ng-show="percent > 0") {{ percent }}%
+            span.label.label-success.ng-hide(ng-show="percent > 0") executed: {{ executedCount }} 
+            span.label.label-danger.ng-hide(ng-show="percent > 0") errored: {{ errorCount }} 
+            span.label.label-default.ng-hide(ng-show="percent > 0") remaining: {{ remainingCount }} 
+        
         div.progress.ng-hide(ng-show="percent > 0")
             div.progress-bar.progress-bar-striped.progress-bar-success.active(role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%")
         div.panel.panel-default.ng-hide(ng-show="percent > 0")
