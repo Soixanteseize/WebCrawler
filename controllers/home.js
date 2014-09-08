@@ -6,8 +6,7 @@ var HomeController = function(app) {
     this.router.get('/', function(req, res) {
         //render the index.html.jade
         return res.render('index', {
-            title: 'Web crawler',
-            count: count
+            title: 'Web crawler'
         });
     });
 
