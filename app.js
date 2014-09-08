@@ -52,7 +52,7 @@ var args = process.argv.slice(2);
 var fromCli = args[0] || null;
 if (fromCli === 'fromCli') {
     crawlerFactory.create({
-        sitemapUrl: "http://kookai-pprod.soixanteseize-lab.com/sitemap.xml",
+        sitemapUrl: "http://www.kookai.fr",
         offset: 0
     });
 }
