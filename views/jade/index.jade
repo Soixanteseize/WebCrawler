@@ -12,7 +12,15 @@ block content
                 form(start-crawler="")
                     div.form-group
                         input.form-control.sitemapUrl(type="text", placeholder="Sitemap XML url")
+                    p Or
+                    div.form-group                        
+                        input.form-control.mysqlHost(type="text", placeholder="Mysql host")
+                        input.form-control.mysqlUser(type="text", placeholder="Mysql user")
+                        input.form-control.mysqlDatabase(type="text", placeholder="Mysql databse")
+                        input.form-control.mysqlPassword(type="text", placeholder="Mysql password")
+                    div.form-group    
                         input.form-control.offset(type="text", placeholder="Offset")
+
                     button.btn.btn-primary.btn-block(href="#", ng-hide="hideStart == 1", ng-click="hideStart=1") Start
         p.text-center
             span.label.label-info.ng-hide(ng-show="percent > 0") {{ percent }}%
