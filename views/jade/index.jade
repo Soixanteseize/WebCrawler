@@ -28,4 +28,4 @@ block content
                 h2.panel-title Logs
             div.panel-body.pre-scrollable
                 div(ng-repeat="log in logs  track by $index")
-                    p(ng-class="{'text-danger': log.type === 'error', 'text-success': log.type === 'success'}") {{ log.message }}      
+                    a(ng-class="{'text-danger': log.type === 'error', 'text-success': log.type === 'success'}", href="{{ log.message }}", target="_blank") {{ log.message }}      

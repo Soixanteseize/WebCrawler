@@ -30,12 +30,15 @@ crawlerFactory.on('create', function(data) {
         app.io.emit('errorFileCrawler', data);
     });
     crawler.on('end', function(data) {
-        //reset stats data
+        /*
         crawler.executedCount = 0;
         crawler.errorCount = 0;
         crawler.remainingCount = 0;
-        crawler.fetch();
         app.io.emit('startCrawler', {percent: 0, startTime: startTime});
+        */
+        //reset the offset when we restart it
+        crawlerFactory.data.offset = 0;
+    	crawlerFactory.create(crawlerFactory.data);
     });
 });
 
@@ -52,7 +55,8 @@ var args = process.argv.slice(2);
 var fromCli = args[0] || null;
 if (fromCli === 'fromCli') {
     crawlerFactory.create({
-        sitemapUrl: "http://www.kookai.fr/sitemap.xml",
+        sitemapUrl: "",
+        host: "http://www.kookai.fr",
         offset: 0
     });
 }

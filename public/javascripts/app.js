@@ -94,19 +94,27 @@ appDirectives.directive('startCrawler', [
             $element.submit(function() {
                 var sitemapUrl = $element.find('.sitemapUrl').val();
                 var offset = $element.find('.offset').val();
+                var mysql = 0;
                 if (offset === '') {
                     offset = 0;
                 }
                 offset = parseInt(offset);
                 if (sitemapUrl === '') {
-                    var error = new Error('The sitemap url is empty');
+                	mysql = 1;
+                    /*var error = new Error('The sitemap url is empty');
                     $scope.errors = [];
                     $scope.errors.push(error.toString());
-                    $scope.$apply();
-                    return;
+                    $scope.$apply();*/
+                    //return;
                 }
                 //send to seocketF
-                app.socket.emit('newCrawler', {sitemapUrl: sitemapUrl, offset: offset});
+                var mysqlOptions = {
+					host     : null,
+					database     : null,
+					user		: null,
+					password : null
+				};
+                app.socket.emit('newCrawler', {sitemapUrl: sitemapUrl, offset: offset, mysql: mysql, mysqlOptions:mysqlOptions, host:'http://www.kookai.fr'});
                 //console.log(app);
             });
         };
