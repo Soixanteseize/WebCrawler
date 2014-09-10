@@ -115,7 +115,7 @@ appDirectives.directive('startCrawler', [
                     offset: offset,
                     mysql: mysql,
                     mysqlOptions: mysqlOptions,
-                    host: 'http://www.kookai.fr'
+                    host: $element.find('.host').val()
                 };
 
                 app.socket.emit('newCrawler', options);
